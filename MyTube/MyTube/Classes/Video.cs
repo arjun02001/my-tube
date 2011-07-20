@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MyTube.Classes
 {
-    class Video
+    public class Video
     {
         public string EmbedURL { get; set; }
         public string ThumbNailURL { get; set; }

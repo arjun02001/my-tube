@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MyTube.Classes;
+using MyTube.UserControls;
 
 namespace MyTube
 {
@@ -40,12 +41,45 @@ namespace MyTube
                         return;
                     }
                     videos = Utility.GetVideos(searchTextBox.Text);
+                    PopulateCanvas();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("MainWindow/KeyDown\n" + ex.Message);
             }
+        }
+
+        private void PopulateCanvas()
+        {
+            try
+            {
+                ContentDragCanvas.Children.Clear();
+                for (int i = 0; i < videos.Count; i++)
+                {
+                    SearchResult control = new SearchResult(videos[i]);
+                    int angleMutiplier = i % 2 == 0 ? 1 : -1;
+                    control.RenderTransform = new RotateTransform { Angle = GetRandom(30, angleMutiplier) };
+                    control.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
+                    control.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
+                    //control.SelectedEvent += control_SelectedEvent;
+                    ContentDragCanvas.Children.Add(control);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MainWindow/PopulateCanvas\n" + ex.Message);
+            }
+        }
+
+        private int GetRandom(double limit, int angleMutiplier)
+        {
+            return (int)((rand.NextDouble() * limit) * angleMutiplier);
+        }
+
+        private double GetRandomDist(double limit)
+        {
+            return rand.NextDouble() * limit;
         }
     }
 }
