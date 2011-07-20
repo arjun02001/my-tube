@@ -1,8 +1,17 @@
 ﻿<Window x:Class="MyTube.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525" WindowState="Maximized">
-    <Grid>
-        
-    </Grid>
+        xmlns:my="clr-namespace:MyTube.Classes"
+        Title="MyTube" Height="350" Width="525" WindowState="Maximized">
+    <Border CornerRadius="8" BorderThickness="1" Background="WhiteSmoke">
+        <Grid>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Background="Black">
+                    <TextBlock Text="MyTube" Margin="10" FontSize="20" Foreground="WhiteSmoke"></TextBlock>
+                    <TextBox Name="searchTextBox" Margin="10" Width="500" Background="WhiteSmoke" KeyDown="searchTextBox_KeyDown"></TextBox>
+                </StackPanel>
+                <my:DragCanvas x:Name="ContentDragCanvas" AllowDragging="True" AllowDragOutOfView="False"></my:DragCanvas>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>
