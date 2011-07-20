@@ -30,7 +30,6 @@ namespace MyTube.UserControls
             embedurl = video.EmbedURL;
             thumbnailurl = video.ThumbNailURL;
             ThumbNailImage.Source = new BitmapImage(new Uri(thumbnailurl, UriKind.RelativeOrAbsolute));
-            this.Loaded += new RoutedEventHandler(SearchResult_Loaded);
             this.MouseEnter += new MouseEventHandler(SearchResult_MouseEnter);
             this.MouseLeave += new MouseEventHandler(SearchResult_MouseLeave);
         }
@@ -45,11 +44,6 @@ namespace MyTube.UserControls
         {
             Storyboard storyboard = (Storyboard)this.TryFindResource("OnMouseEnter");
             storyboard.Begin(this);
-        }
-
-        void SearchResult_Loaded(object sender, RoutedEventArgs e)
-        {
-            ThumbNailImage.SetValue(DragCanvas.CanBeDraggedProperty, true);
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)

@@ -57,13 +57,12 @@ namespace MyTube
                 ContentDragCanvas.Children.Clear();
                 for (int i = 0; i < videos.Count; i++)
                 {
-                    SearchResult control = new SearchResult(videos[i]);
+                    SearchResult searchresult = new SearchResult(videos[i]);
                     int angleMutiplier = i % 2 == 0 ? 1 : -1;
-                    control.RenderTransform = new RotateTransform { Angle = GetRandom(30, angleMutiplier) };
-                    control.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
-                    control.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
-                    //control.SelectedEvent += control_SelectedEvent;
-                    ContentDragCanvas.Children.Add(control);
+                    searchresult.RenderTransform = new RotateTransform { Angle = GetRandom(30, angleMutiplier) };
+                    searchresult.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
+                    searchresult.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
+                    ContentDragCanvas.Children.Add(searchresult);
                 }
             }
             catch (Exception ex)
