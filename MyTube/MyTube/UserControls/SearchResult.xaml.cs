@@ -24,31 +24,58 @@ namespace MyTube.UserControls
         string embedurl = string.Empty;
         string thumbnailurl = string.Empty;
 
+        public delegate void VideoSelectedHandler(string embedurl);
+        public event VideoSelectedHandler VideoSelected;
+
         public SearchResult(Video video)
         {
             InitializeComponent();
-            embedurl = video.EmbedURL;
-            thumbnailurl = video.ThumbNailURL;
-            ThumbNailImage.Source = new BitmapImage(new Uri(thumbnailurl, UriKind.RelativeOrAbsolute));
-            this.MouseEnter += new MouseEventHandler(SearchResult_MouseEnter);
-            this.MouseLeave += new MouseEventHandler(SearchResult_MouseLeave);
+            try
+            {
+                embedurl = video.EmbedURL;
+                thumbnailurl = video.ThumbNailURL;
+                ThumbNailImage.Source = new BitmapImage(new Uri(thumbnailurl, UriKind.RelativeOrAbsolute));
+                this.MouseEnter += new MouseEventHandler(SearchResult_MouseEnter);
+                this.MouseLeave += new MouseEventHandler(SearchResult_MouseLeave);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("SearchResult/SearchResult\n" + ex.Message);
+            }
         }
 
         void SearchResult_MouseLeave(object sender, MouseEventArgs e)
         {
-            Storyboard storyboard = (Storyboard)this.TryFindResource("OnMouseLeave");
-            storyboard.Begin(this);
+            try
+            {
+                Storyboard storyboard = (Storyboard)this.TryFindResource("OnMouseLeave");
+                storyboard.Begin(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("SearchResult/MouseLeave\n" + ex.Message);
+            }
         }
 
         void SearchResult_MouseEnter(object sender, MouseEventArgs e)
         {
-            Storyboard storyboard = (Storyboard)this.TryFindResource("OnMouseEnter");
-            storyboard.Begin(this);
+            try
+            {
+                Storyboard storyboard = (Storyboard)this.TryFindResource("OnMouseEnter");
+                storyboard.Begin(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("SearchResult/MouseEnter\n" + ex.Message);
+            }
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (VideoSelected != null)
+            {
+                VideoSelected(embedurl);
+            }
         }
     }
 }
