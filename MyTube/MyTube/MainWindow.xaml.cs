@@ -23,24 +23,25 @@ namespace MyTube
     {
         private Random rand = new Random(50);
         List<Video> videos = new List<Video>();
+        List<SearchResult> searchresults = new List<SearchResult>();
 
         public MainWindow()
         {
             InitializeComponent();
-            searchTextBox.Focus();
+            SearchTextBox.Focus();
         }
 
-        private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void SearchTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             try
             {
                 if (e.Key == Key.Enter)
                 {
-                    if (string.IsNullOrEmpty(searchTextBox.Text))
+                    if (string.IsNullOrEmpty(SearchTextBox.Text))
                     {
                         return;
                     }
-                    videos = Utility.GetVideos(searchTextBox.Text);
+                    videos = Utility.GetVideos(SearchTextBox.Text);
                     PopulateCanvas();
                 }
             }
@@ -64,8 +65,8 @@ namespace MyTube
                     searchresult.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
                     searchresult.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
                     ContentDragCanvas.Children.Add(searchresult);
+                    searchresults.Add(searchresult);
                 }
-                //SetDragMode();
             }
             catch (Exception ex)
             {
@@ -73,13 +74,13 @@ namespace MyTube
             }
         }
 
-        //private void SetDragMode()
-        //{
-        //    foreach (SearchResult control in ContentDragCanvas.Children)
-        //    {
-        //        DragCanvas.SetCanBeDragged(control, false);
-        //    }
-        //}
+        private void SetDragMode(bool value)
+        {
+            foreach (SearchResult control in searchresults)
+            {
+                DragCanvas.SetCanBeDragged(control, value);
+            }
+        }
 
         void searchresult_VideoSelected(string embedurl)
         {
@@ -104,6 +105,25 @@ namespace MyTube
         private double GetRandomDist(double limit)
         {
             return rand.NextDouble() * limit;
+        }
+
+        private void PlayModeCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (PlayModeCheckBox.IsChecked == true)
+                {
+                    SetDragMode(false);
+                }
+                else
+                {
+                    SetDragMode(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MainWindow/CheckBoxClick\n" + ex.Message);
+            }
         }
     }
 }
