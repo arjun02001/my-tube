@@ -58,16 +58,41 @@ namespace MyTube
                 for (int i = 0; i < videos.Count; i++)
                 {
                     SearchResult searchresult = new SearchResult(videos[i]);
+                    searchresult.VideoSelected += new SearchResult.VideoSelectedHandler(searchresult_VideoSelected);
                     int angleMutiplier = i % 2 == 0 ? 1 : -1;
                     searchresult.RenderTransform = new RotateTransform { Angle = GetRandom(30, angleMutiplier) };
                     searchresult.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
                     searchresult.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
                     ContentDragCanvas.Children.Add(searchresult);
                 }
+                //SetDragMode();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("MainWindow/PopulateCanvas\n" + ex.Message);
+            }
+        }
+
+        //private void SetDragMode()
+        //{
+        //    foreach (SearchResult control in ContentDragCanvas.Children)
+        //    {
+        //        DragCanvas.SetCanBeDragged(control, false);
+        //    }
+        //}
+
+        void searchresult_VideoSelected(string embedurl)
+        {
+            try
+            {
+                Browser browser = new Browser(embedurl);
+                browser.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
+                browser.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
+                ContentDragCanvas.Children.Add(browser);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MainWindow/VideoSelected\n" + ex.Message);
             }
         }
 

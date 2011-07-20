@@ -38,7 +38,7 @@
     <Grid Background="Black">
         <Image x:Name="ThumbNailImage" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Grid Name="MyGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.0">
-            <Button Name="PlayButton" Click="PlayButton_Click" Template="{StaticResource PlayButtonTemplate}" Grid.ColumnSpan="2"></Button>
+            <Button Name="PlayButton" Click="PlayButton_Click" Template="{StaticResource PlayButtonTemplate}"></Button>
         </Grid>
     </Grid>
 </UserControl>
