@@ -21,10 +21,9 @@ namespace MyTube.UserControls
     /// </summary>
     public partial class SearchResult : UserControl
     {
-        string embedurl = string.Empty;
-        string thumbnailurl = string.Empty;
+        Video video = new Video();
 
-        public delegate void VideoSelectedHandler(string embedurl);
+        public delegate void VideoSelectedHandler(Video video);
         public event VideoSelectedHandler VideoSelected;
 
         public SearchResult(Video video)
@@ -32,9 +31,9 @@ namespace MyTube.UserControls
             InitializeComponent();
             try
             {
-                embedurl = video.EmbedURL;
-                thumbnailurl = video.ThumbNailURL;
-                ThumbNailImage.Source = new BitmapImage(new Uri(thumbnailurl, UriKind.RelativeOrAbsolute));
+                this.video = video;
+                ThumbNailImage.Source = new BitmapImage(new Uri(video.ThumbNailURL, UriKind.RelativeOrAbsolute));
+                RankTextBlock.Text = video.Rank.ToString();
                 this.MouseEnter += new MouseEventHandler(SearchResult_MouseEnter);
                 this.MouseLeave += new MouseEventHandler(SearchResult_MouseLeave);
             }
@@ -74,7 +73,7 @@ namespace MyTube.UserControls
         {
             if (VideoSelected != null)
             {
-                VideoSelected(embedurl);
+                VideoSelected(video);
             }
         }
     }

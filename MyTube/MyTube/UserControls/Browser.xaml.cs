@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MyTube.Classes;
 
 namespace MyTube.UserControls
 {
@@ -19,10 +20,39 @@ namespace MyTube.UserControls
     /// </summary>
     public partial class Browser : UserControl
     {
-        public Browser(string embedurl)
+        Video video = new Video();
+
+        public delegate void BrowserClosedHandler(Browser browser);
+        public event BrowserClosedHandler BrowserClosed;
+
+        public Browser(Video video)
         {
             InitializeComponent();
-            VideoBrowser.Source = new Uri(embedurl, UriKind.RelativeOrAbsolute);
+            try
+            {
+                this.video = video;
+                VideoBrowser.Source = new Uri(video.EmbedURL, UriKind.RelativeOrAbsolute);
+                RankTextBlock.Text = video.Rank.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Browser/Browser\n" + ex.Message);
+            }
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (BrowserClosed != null)
+                {
+                    BrowserClosed(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Browser/CloseButton\n" + ex.Message);
+            }
         }
     }
 }

@@ -23,7 +23,6 @@ namespace MyTube
     {
         private Random rand = new Random(50);
         List<Video> videos = new List<Video>();
-        List<SearchResult> searchresults = new List<SearchResult>();
 
         public MainWindow()
         {
@@ -42,6 +41,11 @@ namespace MyTube
                         return;
                     }
                     videos = Utility.GetVideos(SearchTextBox.Text);
+                    if (videos.Count == 0)
+                    {
+                        MessageBox.Show("Your search yielded no results");
+                        return;
+                    }
                     PopulateCanvas();
                 }
             }
@@ -62,10 +66,7 @@ namespace MyTube
                     searchresult.VideoSelected += new SearchResult.VideoSelectedHandler(searchresult_VideoSelected);
                     int angleMutiplier = i % 2 == 0 ? 1 : -1;
                     searchresult.RenderTransform = new RotateTransform { Angle = GetRandom(30, angleMutiplier) };
-                    searchresult.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
-                    searchresult.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
-                    ContentDragCanvas.Children.Add(searchresult);
-                    searchresults.Add(searchresult);
+                    AddUIElementToCanvas(searchresult);
                 }
             }
             catch (Exception ex)
@@ -74,26 +75,53 @@ namespace MyTube
             }
         }
 
-        private void SetDragMode(bool value)
-        {
-            foreach (SearchResult control in searchresults)
-            {
-                DragCanvas.SetCanBeDragged(control, value);
-            }
-        }
-
-        void searchresult_VideoSelected(string embedurl)
+        private void AddUIElementToCanvas(UIElement control)
         {
             try
             {
-                Browser browser = new Browser(embedurl);
-                browser.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
-                browser.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
-                ContentDragCanvas.Children.Add(browser);
+                control.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
+                control.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
+                ContentDragCanvas.Children.Add(control);
+                DragCanvas.SetCanBeDragged(control, !(bool)PlayModeCheckBox.IsChecked);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MainWindow/AddControlToCanvas\n" + ex.Message);
+            }
+        }
+
+        private void SetDragMode(bool? value)
+        {
+            foreach (UIElement element in ContentDragCanvas.Children)
+            {
+                DragCanvas.SetCanBeDragged(element, (bool)value);
+            }
+        }
+
+        void searchresult_VideoSelected(Video video)
+        {
+            try
+            {
+                Browser browser = new Browser(video);
+                browser.BrowserClosed += new Browser.BrowserClosedHandler(browser_BrowserClosed);
+                AddUIElementToCanvas(browser);
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show("MainWindow/VideoSelected\n" + ex.Message);
+            }
+        }
+
+        void browser_BrowserClosed(Browser browser)
+        {
+            try
+            {
+                ContentDragCanvas.Children.Remove(browser);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MainWindow/BrowserClosed\n" + ex.Message);
             }
         }
 
@@ -111,14 +139,7 @@ namespace MyTube
         {
             try
             {
-                if (PlayModeCheckBox.IsChecked == true)
-                {
-                    SetDragMode(false);
-                }
-                else
-                {
-                    SetDragMode(true);
-                }
+                SetDragMode(!PlayModeCheckBox.IsChecked);
             }
             catch (Exception ex)
             {
