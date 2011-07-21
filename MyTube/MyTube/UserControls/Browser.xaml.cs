@@ -21,6 +21,7 @@ namespace MyTube.UserControls
     public partial class Browser : UserControl
     {
         Video video = new Video();
+        string url = string.Empty;
 
         public delegate void BrowserClosedHandler(Browser browser);
         public event BrowserClosedHandler BrowserClosed;
@@ -58,7 +59,14 @@ namespace MyTube.UserControls
 
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                url = Utility.FixURL(video.VideoURL);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Browser/DownloadButton\n" + ex.Message);
+            }
         }
     }
 }

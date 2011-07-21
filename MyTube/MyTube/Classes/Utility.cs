@@ -45,5 +45,19 @@ namespace MyTube.Classes
         {
             return rand.NextDouble() * limit;
         }
+
+        public static string FixURL(string url)
+        {
+            url = url.Replace("www.youtube.com", "youtube.com");
+            if (url.IndexOf("http://youtube.com/v/") >= 0)
+            {
+                url.Replace("http://youtube.com/v/", "http://youtube.com/watch?v=");
+            }
+            if (url.IndexOf("http://youtube.com/watch?v=") < 0)
+            {
+                url = string.Empty;
+            }
+            return url;
+        }
     }
 }
