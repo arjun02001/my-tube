@@ -23,6 +23,7 @@ namespace MyTube.Classes
                 videos = (from item in rss.Element("channel").Descendants("item")
                           select new Video
                           {
+                              VideoURL = item.Element("link").Value.Substring(0, item.Element("link").Value.IndexOf("&")),
                               EmbedURL = item.Element("link").Value.Substring(0, item.Element("link").Value.IndexOf("&")).Replace("watch?v=", "embed/"),
                               ThumbNailURL = item.Element(media + "group").Element(media + "thumbnail").Attribute("url").Value,
                               Rank = rank++
