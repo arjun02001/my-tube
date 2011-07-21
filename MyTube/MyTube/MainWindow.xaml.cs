@@ -21,8 +21,8 @@ namespace MyTube
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Random rand = new Random(50);
         List<Video> videos = new List<Video>();
+        string previoussearchstring = string.Empty, currentsearchstring = string.Empty;
 
         public MainWindow()
         {
@@ -36,22 +36,40 @@ namespace MyTube
             {
                 if (e.Key == Key.Enter)
                 {
-                    if (string.IsNullOrEmpty(SearchTextBox.Text))
-                    {
-                        return;
-                    }
-                    videos = Utility.GetVideos(SearchTextBox.Text);
-                    if (videos.Count == 0)
-                    {
-                        MessageBox.Show("Your search yielded no results");
-                        return;
-                    }
-                    PopulateCanvas();
+                    SearchVideos();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("MainWindow/KeyDown\n" + ex.Message);
+            }
+        }
+
+        private void SearchVideos()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(SearchTextBox.Text))
+                {
+                    return;
+                }
+                previoussearchstring = currentsearchstring;
+                currentsearchstring = SearchTextBox.Text;
+                if (!previoussearchstring.Equals(currentsearchstring))
+                {
+                    Utility.StartIndex = 1;
+                }
+                videos = Utility.GetVideos(SearchTextBox.Text);
+                if (0 == videos.Count)
+                {
+                    MessageBox.Show("Your search yielded no results");
+                    return;
+                }
+                PopulateCanvas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MainWindow/SearchVideos\n" + ex.Message);
             }
         }
 
@@ -65,7 +83,7 @@ namespace MyTube
                     SearchResult searchresult = new SearchResult(videos[i]);
                     searchresult.VideoSelected += new SearchResult.VideoSelectedHandler(searchresult_VideoSelected);
                     int angleMutiplier = i % 2 == 0 ? 1 : -1;
-                    searchresult.RenderTransform = new RotateTransform { Angle = GetRandom(30, angleMutiplier) };
+                    searchresult.RenderTransform = new RotateTransform { Angle = Utility.GetRandom(30, angleMutiplier) };
                     AddUIElementToCanvas(searchresult);
                 }
             }
@@ -79,8 +97,8 @@ namespace MyTube
         {
             try
             {
-                control.SetValue(Canvas.LeftProperty, GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
-                control.SetValue(Canvas.TopProperty, GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
+                control.SetValue(Canvas.LeftProperty, Utility.GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
+                control.SetValue(Canvas.TopProperty, Utility.GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
                 ContentDragCanvas.Children.Add(control);
                 DragCanvas.SetCanBeDragged(control, !(bool)PlayModeCheckBox.IsChecked);
             }
@@ -105,7 +123,6 @@ namespace MyTube
                 Browser browser = new Browser(video);
                 browser.BrowserClosed += new Browser.BrowserClosedHandler(browser_BrowserClosed);
                 AddUIElementToCanvas(browser);
-
             }
             catch (Exception ex)
             {
@@ -125,16 +142,6 @@ namespace MyTube
             }
         }
 
-        private int GetRandom(double limit, int angleMutiplier)
-        {
-            return (int)((rand.NextDouble() * limit) * angleMutiplier);
-        }
-
-        private double GetRandomDist(double limit)
-        {
-            return rand.NextDouble() * limit;
-        }
-
         private void PlayModeCheckBox_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -144,6 +151,34 @@ namespace MyTube
             catch (Exception ex)
             {
                 MessageBox.Show("MainWindow/CheckBoxClick\n" + ex.Message);
+            }
+        }
+
+        private void NavigationButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(SearchTextBox.Text))
+                {
+                    return;
+                }
+                if (((Button)sender).Tag.ToString().Equals(Constants.PREVIOUS))
+                {
+                    if (Utility.StartIndex < (Constants.MAX_RESULTS + 1))
+                    {
+                        return;
+                    }
+                    Utility.StartIndex -= Constants.MAX_RESULTS;
+                }
+                else
+                {
+                    Utility.StartIndex += Constants.MAX_RESULTS;
+                }
+                SearchVideos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MainWindow/NavigationButton\n" + ex.Message);
             }
         }
     }

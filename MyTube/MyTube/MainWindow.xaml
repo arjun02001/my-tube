@@ -10,6 +10,8 @@
                     <TextBlock Text="MyTube" Margin="10" FontSize="20" Foreground="WhiteSmoke"></TextBlock>
                     <TextBox Name="SearchTextBox" Margin="10" Width="500" Background="WhiteSmoke" KeyDown="SearchTextBox_KeyDown"></TextBox>
                     <CheckBox Name="PlayModeCheckBox" Margin="10" Content="Play Mode" Click="PlayModeCheckBox_Click" Foreground="WhiteSmoke" FontSize="15" VerticalAlignment="Center"></CheckBox>
+                    <Button Name="PreviousButton" Margin="10" Width="90" Content="Previous 10 &lt;&lt;" Click="NavigationButton_Click" Background="Black" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Center" Tag="previous"></Button>
+                    <Button Name="NextButton" Margin="10" Width="90" Content="&gt;&gt;Next 10" Click="NavigationButton_Click" Background="Black" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Center" Tag="next"></Button>
                 </StackPanel>
                 <my:DragCanvas x:Name="ContentDragCanvas" AllowDragging="True" AllowDragOutOfView="False" ></my:DragCanvas>
             </DockPanel>

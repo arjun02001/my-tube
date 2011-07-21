@@ -42,6 +42,7 @@ namespace MyTube.UserControls
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            VideoBrowser.Source = null;
             try
             {
                 if (BrowserClosed != null)
