@@ -9,13 +9,14 @@ namespace MyTube.Classes
 {
     class Utility
     {
+        static Random rand = new Random(50);
         public static int StartIndex = 1;
 
         public static List<Video> GetVideos(string searchstring)
         {
             XNamespace media = "http://search.yahoo.com/mrss/";
             List<Video> videos = new List<Video>();
-            int rank = 1;
+            int rank = StartIndex;
             try
             {
                 XElement rss = XElement.Load(string.Format(Constants.SEARCH_URL, searchstring, StartIndex));
@@ -32,6 +33,16 @@ namespace MyTube.Classes
                 MessageBox.Show("Utility/GetVideos\n" + ex.Message);
             }
             return videos;
+        }
+
+        public static int GetRandom(double limit, int angleMutiplier)
+        {
+            return (int)((rand.NextDouble() * limit) * angleMutiplier);
+        }
+
+        public static double GetRandomDist(double limit)
+        {
+            return rand.NextDouble() * limit;
         }
     }
 }
