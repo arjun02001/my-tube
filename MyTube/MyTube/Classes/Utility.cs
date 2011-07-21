@@ -19,7 +19,7 @@ namespace MyTube.Classes
             int rank = StartIndex;
             try
             {
-                XElement rss = XElement.Load(string.Format(Constants.SEARCH_URL, searchstring, StartIndex));
+                XElement rss = XElement.Load(string.Format(Constants.SEARCH_URL, searchstring, Constants.MAX_RESULTS, StartIndex));
                 videos = (from item in rss.Element("channel").Descendants("item")
                           select new Video
                           {
