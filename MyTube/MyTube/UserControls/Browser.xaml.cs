@@ -55,5 +55,10 @@ namespace MyTube.UserControls
                 MessageBox.Show("Browser/CloseButton\n" + ex.Message);
             }
         }
+
+        private void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
