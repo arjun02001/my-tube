@@ -34,6 +34,7 @@ namespace MyTube.UserControls
                 this.video = video;
                 ThumbNailImage.Source = new BitmapImage(new Uri(video.ThumbNailURL, UriKind.RelativeOrAbsolute));
                 RankTextBlock.Text = video.Rank.ToString();
+                TitleTextBlock.Text = video.Title + " " + (int.Parse(video.Duration) / 60).ToString() + ":" + (int.Parse(video.Duration) % 60).ToString();
                 this.MouseEnter += new MouseEventHandler(SearchResult_MouseEnter);
                 this.MouseLeave += new MouseEventHandler(SearchResult_MouseLeave);
             }

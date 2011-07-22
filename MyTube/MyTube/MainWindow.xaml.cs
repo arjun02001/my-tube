@@ -36,6 +36,7 @@ namespace MyTube
             {
                 if (e.Key == Key.Enter)
                 {
+                    Utility.StartIndex = 1;
                     SearchVideos();
                 }
             }
@@ -77,6 +78,7 @@ namespace MyTube
         {
             try
             {
+                StopPlayingVideos();
                 ContentDragCanvas.Children.Clear();
                 for (int i = 0; i < videos.Count; i++)
                 {
@@ -90,6 +92,24 @@ namespace MyTube
             catch (Exception ex)
             {
                 MessageBox.Show("MainWindow/PopulateCanvas\n" + ex.Message);
+            }
+        }
+
+        private void StopPlayingVideos()
+        {
+            try
+            {
+                foreach (UIElement element in ContentDragCanvas.Children)
+                {
+                    if (element is Browser)
+                    {
+                        ((Browser)element).VideoBrowser.Source = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MainWindow/StopPlayingVideos\n" + ex.Message);
             }
         }
 
