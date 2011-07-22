@@ -46,6 +46,9 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Gets videos using the search string given by the user
+        /// </summary>
         private void SearchVideos()
         {
             try
@@ -74,6 +77,9 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Puts any UIElement on the canvas
+        /// </summary>
         private void PopulateCanvas()
         {
             try
@@ -95,6 +101,9 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Before populating the canvas, stop any playing video
+        /// </summary>
         private void StopPlayingVideos()
         {
             try
@@ -113,6 +122,10 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Set the dependency properties and add control to canvas
+        /// </summary>
+        /// <param name="control"></param>
         private void AddUIElementToCanvas(UIElement control)
         {
             try
@@ -128,6 +141,10 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Toggle the drag mode of all canvas elements
+        /// </summary>
+        /// <param name="value"></param>
         private void SetDragMode(bool? value)
         {
             foreach (UIElement element in ContentDragCanvas.Children)
@@ -136,6 +153,10 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Open a browser to play the video
+        /// </summary>
+        /// <param name="video"></param>
         void searchresult_VideoSelected(Video video)
         {
             try
@@ -150,6 +171,10 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Remove the browser from canvas on browser close
+        /// </summary>
+        /// <param name="browser"></param>
         void browser_BrowserClosed(Browser browser)
         {
             try
@@ -162,6 +187,11 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Toggle the playmode / dragmode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayModeCheckBox_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -174,6 +204,11 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Show the previous / next set of results
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NavigationButton_Click(object sender, RoutedEventArgs e)
         {
             try
