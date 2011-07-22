@@ -14,6 +14,7 @@ using MyTube.Classes;
 using System.Collections.Specialized;
 using System.Web;
 using System.Net;
+using Microsoft.Win32;
 
 namespace MyTube
 {
@@ -23,7 +24,9 @@ namespace MyTube
     public partial class Download : Window
     {
         Video video = new Video();
-        string scrapedata = string.Empty;
+        string scrapedata = string.Empty, filepath = string.Empty;
+        WebClient client = new WebClient();
+        bool allowsaving = false;
 
         public Download(Video video)
         {
@@ -32,10 +35,16 @@ namespace MyTube
             {
                 this.video = video;
                 TitleTextBlock.Text = video.Title + ".flv";
+                this.Closing += new System.ComponentModel.CancelEventHandler(Download_Closing);
                 scrapedata = Utility.ScrapeURL(Utility.FixURL(video.VideoURL));
                 if (scrapedata.IndexOf("Error:") > 0)
                 {
                     return;
+                }
+                filepath = ShowSaveFileDialog();
+                if (!string.IsNullOrEmpty(filepath))
+                {
+                    allowsaving = true;
                 }
             }
             catch (Exception ex)
@@ -44,19 +53,48 @@ namespace MyTube
             }
         }
 
+        private string ShowSaveFileDialog()
+        {
+            string filename = string.Empty;
+            try
+            {
+                SaveFileDialog savefiledialog = new SaveFileDialog();
+                savefiledialog.FileName = video.Title;
+                savefiledialog.DefaultExt = ".flv";
+                savefiledialog.Filter = "Flash files (.flv) | *.flv";
+                if (savefiledialog.ShowDialog() == true)
+                {
+                    filename = savefiledialog.FileName;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Download/ShowSaveFileDialog\n" + ex.Message);
+            }
+            return filename;
+        }
+
+        void Download_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            client.CancelAsync();
+        }
+
         public void ProcessScrapeData()
         {
             try
             {
+                if (!allowsaving)
+                {
+                    this.Close();
+                }
                 string serverdata = Utility.GetServerURL(scrapedata);
                 int separator = serverdata.IndexOf("?");
                 string serverurl = serverdata.Substring(0, separator).Replace("?", "");
                 NameValueCollection collection = HttpUtility.ParseQueryString(serverdata.Substring(separator));
-                WebClient client = new WebClient();
                 client.QueryString = collection;
                 client.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(client_DownloadFileCompleted);
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                client.DownloadFileAsync(new Uri(serverurl), video.Title + ".flv");
+                client.DownloadFileAsync(new Uri(serverurl), filepath);
             }
             catch (Exception ex)
             {
