@@ -15,6 +15,7 @@ namespace MyTube.Classes
         public static List<Video> GetVideos(string searchstring)
         {
             XNamespace media = "http://search.yahoo.com/mrss/";
+            XNamespace yt = "http://gdata.youtube.com/schemas/2007";
             List<Video> videos = new List<Video>();
             int rank = StartIndex;
             try
@@ -26,7 +27,9 @@ namespace MyTube.Classes
                               VideoURL = item.Element("link").Value.Substring(0, item.Element("link").Value.IndexOf("&")),
                               EmbedURL = item.Element("link").Value.Substring(0, item.Element("link").Value.IndexOf("&")).Replace("watch?v=", "embed/"),
                               ThumbNailURL = item.Element(media + "group").Element(media + "thumbnail").Attribute("url").Value,
-                              Rank = rank++
+                              Rank = rank++,
+                              Title = item.Element("title").Value,
+                              Duration = item.Element(media + "group").Element(yt + "duration").Attribute("seconds").Value
                           }).ToList<Video>();
             }
             catch (Exception ex)

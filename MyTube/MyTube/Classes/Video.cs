@@ -11,5 +11,7 @@ namespace MyTube.Classes
         public string EmbedURL { get; set; }
         public string ThumbNailURL { get; set; }
         public int Rank { get; set; }
+        public string Title { get; set; }
+        public string Duration { get; set; }
     }
 }
