@@ -15,6 +15,7 @@ using System.Collections.Specialized;
 using System.Web;
 using System.Net;
 using Microsoft.Win32;
+using System.IO;
 
 namespace MyTube
 {
@@ -24,7 +25,8 @@ namespace MyTube
     public partial class Download : Window
     {
         Video video = new Video();
-        string scrapedata = string.Empty, filepath = string.Empty;
+        string scrapedata = string.Empty;
+        public string FilePath = string.Empty;
         WebClient client = new WebClient();
         bool allowsaving = false;
 
@@ -41,8 +43,8 @@ namespace MyTube
                 {
                     return;
                 }
-                filepath = ShowSaveFileDialog();
-                if (!string.IsNullOrEmpty(filepath))
+                FilePath = ShowSaveFileDialog();
+                if (!string.IsNullOrEmpty(FilePath))
                 {
                     allowsaving = true;
                 }
@@ -94,7 +96,7 @@ namespace MyTube
                 client.QueryString = collection;
                 client.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(client_DownloadFileCompleted);
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                client.DownloadFileAsync(new Uri(serverurl), filepath);
+                client.DownloadFileAsync(new Uri(serverurl), FilePath);
             }
             catch (Exception ex)
             {
