@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Xml.Linq;
+using System.Net;
+using System.Web;
 
 namespace MyTube.Classes
 {
@@ -39,9 +41,9 @@ namespace MyTube.Classes
             return videos;
         }
 
-        public static int GetRandom(double limit, int angleMutiplier)
+        public static int GetRandom(double limit, int anglemutiplier)
         {
-            return (int)((rand.NextDouble() * limit) * angleMutiplier);
+            return (int)((rand.NextDouble() * limit) * anglemutiplier);
         }
 
         public static double GetRandomDist(double limit)
@@ -51,16 +53,57 @@ namespace MyTube.Classes
 
         public static string FixURL(string url)
         {
-            url = url.Replace("www.youtube.com", "youtube.com");
-            if (url.IndexOf("http://youtube.com/v/") >= 0)
+            try
             {
-                url.Replace("http://youtube.com/v/", "http://youtube.com/watch?v=");
+                url = url.Replace("www.youtube.com", "youtube.com");
+                if (url.IndexOf("http://youtube.com/v/") >= 0)
+                {
+                    url.Replace("http://youtube.com/v/", "http://youtube.com/watch?v=");
+                }
+                if (url.IndexOf("http://youtube.com/watch?v=") < 0)
+                {
+                    url = string.Empty;
+                }
             }
-            if (url.IndexOf("http://youtube.com/watch?v=") < 0)
+            catch (Exception ex)
             {
-                url = string.Empty;
+                MessageBox.Show("Utility/FixURL\n" + ex.Message);
             }
             return url;
+        }
+
+        public static string ScrapeURL(string url)
+        {
+            try
+            {
+                return new WebClient().DownloadString(url);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Utility/ScrapeURL\n" + ex.Message);
+            }
+            return string.Empty;
+        }
+
+        public static string GetServerURL(string scrapedata)
+        {
+            try
+            {
+                int startindex = 0, endindex = 0;
+                string starttag = "\"fmt_url_map\": ";
+                string endtag = "\",";
+                startindex = scrapedata.IndexOf(starttag, StringComparison.CurrentCultureIgnoreCase);
+                endindex = scrapedata.IndexOf(endtag, startindex, StringComparison.CurrentCultureIgnoreCase);
+                string serverurl = scrapedata.Substring(startindex + starttag.Length, endindex - (startindex + starttag.Length));
+                serverurl = serverurl.Substring(serverurl.LastIndexOf("http"));
+                serverurl = HttpUtility.UrlDecode(serverurl).Replace("%252", "%2").Replace("\\u0026", "&").Replace(@"\", "");
+                return serverurl;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Utility/GetServerURL\n" + ex.Message);
+            }
+            return string.Empty;
         }
     }
 }
