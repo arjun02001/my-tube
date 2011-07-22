@@ -63,6 +63,7 @@ namespace MyTube.UserControls
             {
                 Download download = new Download(video);
                 download.Show();
+                download.ProcessScrapeData();
             }
             catch (Exception ex)
             {
