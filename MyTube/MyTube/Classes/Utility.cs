@@ -12,8 +12,14 @@ namespace MyTube.Classes
     class Utility
     {
         static Random rand = new Random(50);
+        //variable to hold the starting index for search query. eg results 11-20
         public static int StartIndex = 1;
 
+        /// <summary>
+        /// Takes a search string, makes a call to youtube and returns the videos found.
+        /// </summary>
+        /// <param name="searchstring"></param>
+        /// <returns></returns>
         public static List<Video> GetVideos(string searchstring)
         {
             XNamespace media = "http://search.yahoo.com/mrss/";
@@ -22,6 +28,7 @@ namespace MyTube.Classes
             int rank = StartIndex;
             try
             {
+                //call to the api
                 XElement rss = XElement.Load(string.Format(Constants.SEARCH_URL, searchstring, Constants.MAX_RESULTS, StartIndex));
                 videos = (from item in rss.Element("channel").Descendants("item")
                           select new Video
@@ -51,6 +58,11 @@ namespace MyTube.Classes
             return rand.NextDouble() * limit;
         }
 
+        /// <summary>
+        /// Takes a youtube url and fixes it.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static string FixURL(string url)
         {
             try
@@ -72,6 +84,11 @@ namespace MyTube.Classes
             return url;
         }
 
+        /// <summary>
+        /// Takes an url and returns the view source
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static string ScrapeURL(string url)
         {
             try
@@ -85,6 +102,11 @@ namespace MyTube.Classes
             return string.Empty;
         }
 
+        /// <summary>
+        /// Takes a youtube video view source and extracts the download server url
+        /// </summary>
+        /// <param name="scrapedata"></param>
+        /// <returns></returns>
         public static string GetServerURL(string scrapedata)
         {
             try
@@ -104,6 +126,57 @@ namespace MyTube.Classes
                 MessageBox.Show("Utility/GetServerURL\n" + ex.Message);
             }
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Takes duration in secs and returns in the form hh:mm:ss
+        /// </summary>
+        /// <param name="durationinseconds"></param>
+        /// <returns></returns>
+        public static string GetDuration(string durationinseconds)
+        {
+            string duration = string.Empty;
+            try
+            {
+                int seconds = int.Parse(durationinseconds);
+                int hr = seconds / 3600;
+                seconds = seconds % 3600;
+                int min = seconds / 60;
+                seconds = seconds % 60;
+                int sec = seconds;
+                if (hr != 0)
+                {
+                    duration += hr.ToString() + ":";
+                }
+                if (hr != 0 && min == 0)
+                {
+                    duration += "00:";
+                }
+                else if (min != 0)
+                {
+                    if (min <= 9)
+                    {
+                        duration += "0" + min.ToString() + ":";
+                    }
+                    else
+                    {
+                        duration += min.ToString() + ":";
+                    }
+                }
+                if (sec <= 9)
+                {
+                    duration += "0" + sec.ToString();
+                }
+                else
+                {
+                    duration += sec.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Utility/GetDuration\n" + ex.Message);
+            }
+            return duration;
         }
     }
 }

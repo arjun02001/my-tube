@@ -26,7 +26,7 @@ namespace MyTube
     {
         Video video = new Video();
         string scrapedata = string.Empty;
-        public string FilePath = string.Empty;
+        public string FilePath { get; set; }
         WebClient client = new WebClient();
         bool allowsaving = false;
 
@@ -55,6 +55,10 @@ namespace MyTube
             }
         }
 
+        /// <summary>
+        /// Get file path from user
+        /// </summary>
+        /// <returns></returns>
         private string ShowSaveFileDialog()
         {
             string filename = string.Empty;

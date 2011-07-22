@@ -15,9 +15,6 @@ using MyTube.Classes;
 
 namespace MyTube.UserControls
 {
-    /// <summary>
-    /// Interaction logic for Browser.xaml
-    /// </summary>
     public partial class Browser : UserControl
     {
         Video video = new Video();
@@ -26,6 +23,10 @@ namespace MyTube.UserControls
         public delegate void BrowserClosedHandler(Browser browser);
         public event BrowserClosedHandler BrowserClosed;
 
+        /// <summary>
+        /// Assign the url as source to the web-browser
+        /// </summary>
+        /// <param name="video"></param>
         public Browser(Video video)
         {
             InitializeComponent();
@@ -57,6 +58,11 @@ namespace MyTube.UserControls
             }
         }
 
+        /// <summary>
+        /// Opens a download window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
             try

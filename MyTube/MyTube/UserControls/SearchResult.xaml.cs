@@ -26,6 +26,10 @@ namespace MyTube.UserControls
         public delegate void VideoSelectedHandler(Video video);
         public event VideoSelectedHandler VideoSelected;
 
+        /// <summary>
+        /// Assign the meta data to this control
+        /// </summary>
+        /// <param name="video"></param>
         public SearchResult(Video video)
         {
             InitializeComponent();
@@ -34,7 +38,7 @@ namespace MyTube.UserControls
                 this.video = video;
                 ThumbNailImage.Source = new BitmapImage(new Uri(video.ThumbNailURL, UriKind.RelativeOrAbsolute));
                 RankTextBlock.Text = video.Rank.ToString();
-                TitleTextBlock.Text = video.Title + " " + (int.Parse(video.Duration) / 60).ToString() + ":" + (int.Parse(video.Duration) % 60).ToString();
+                TitleTextBlock.Text = video.Title + " " + Utility.GetDuration(video.Duration);
                 this.MouseEnter += new MouseEventHandler(SearchResult_MouseEnter);
                 this.MouseLeave += new MouseEventHandler(SearchResult_MouseLeave);
             }
