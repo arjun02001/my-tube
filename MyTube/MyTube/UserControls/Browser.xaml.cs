@@ -61,7 +61,8 @@ namespace MyTube.UserControls
         {
             try
             {
-                url = Utility.FixURL(video.VideoURL);
+                Download download = new Download(video);
+                download.Show();
             }
             catch (Exception ex)
             {

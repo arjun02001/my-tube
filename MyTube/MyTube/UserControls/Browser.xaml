@@ -15,7 +15,7 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Name="RankTextBlock" Foreground="WhiteSmoke" Margin="2" Grid.Column="0"></TextBlock>
-                <Button Name="DownloadButton" Content="Download" Grid.Column="1" Width="60" Background="Black" Click="DownloadButton_Click" Foreground="WhiteSmoke" HorizontalAlignment="Right" Margin="2"></Button>
+                <Button Name="DownloadButton" Content="Download" Grid.Column="1" Width="60" Background="Black" Click="DownloadButton_Click" Foreground="WhiteSmoke" HorizontalAlignment="Center" Margin="2"></Button>
                 <Button Name="CloseButton" Content="X" Grid.Column="2" Width="20" Background="Black" Click="CloseButton_Click" Foreground="WhiteSmoke" HorizontalAlignment="Right" Margin="2"></Button>
             </Grid>
             <WebBrowser Name="VideoBrowser"></WebBrowser>
