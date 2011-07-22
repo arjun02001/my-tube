@@ -37,6 +37,7 @@ namespace MyTube
             {
                 this.video = video;
                 TitleTextBlock.Text = video.Title + ".flv";
+                this.Background = new ImageBrush(new BitmapImage(new Uri(video.ThumbNailURL, UriKind.RelativeOrAbsolute)));
                 this.Closing += new System.ComponentModel.CancelEventHandler(Download_Closing);
                 scrapedata = Utility.ScrapeURL(Utility.FixURL(video.VideoURL));
                 if (scrapedata.IndexOf("Error:") > 0)
