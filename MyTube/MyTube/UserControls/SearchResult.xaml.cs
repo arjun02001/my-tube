@@ -9,9 +9,6 @@ using MyTube.Classes;
 
 namespace MyTube.UserControls
 {
-    /// <summary>
-    /// Interaction logic for SearchResult.xaml
-    /// </summary>
     public partial class SearchResult : UserControl
     {
         Video video = new Video();
@@ -67,6 +64,11 @@ namespace MyTube.UserControls
             }
         }
 
+        /// <summary>
+        /// Inform the event subscriber of the video that has been selected for playing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (VideoSelected != null)

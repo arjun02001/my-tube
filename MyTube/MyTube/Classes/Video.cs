@@ -1,4 +1,5 @@
 ﻿//Arjun Mukherji - Rights to distribute and modify granted.
+
 namespace MyTube.Classes
 {
     public class Video

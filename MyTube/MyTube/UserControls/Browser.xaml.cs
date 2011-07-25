@@ -33,6 +33,11 @@ namespace MyTube.UserControls
             }
         }
 
+        /// <summary>
+        /// Inform the subscriber that this browser window is closed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             VideoBrowser.Source = null;
@@ -50,7 +55,7 @@ namespace MyTube.UserControls
         }
 
         /// <summary>
-        /// Opens a download window
+        /// Opens a download window, sends the video object, and the extraction type - avi or mp3
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
