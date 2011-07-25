@@ -13,6 +13,8 @@ namespace MyTube.Classes
         public const string PREVIOUS = "previous";
         public const string NEXT = "next";
         public const int MAX_RESULTS = 10;
-        public const string DOWNLOAD_COMPLETE = "Download Complete";
+        public const string EXTRACTION_COMPLETE = "Extraction Complete";
+        public const string AUDIO = "audio";
+        public const string VIDEO = "video";
     }
 }
