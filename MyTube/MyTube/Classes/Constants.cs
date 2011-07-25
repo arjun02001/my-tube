@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-
+﻿//Arjun Mukherji - Rights to distribute and modify granted.
 namespace MyTube.Classes
 {
     //api information at http://code.google.com/apis/youtube/2.0/developers_guide_protocol_api_query_parameters.html
