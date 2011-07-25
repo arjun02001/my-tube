@@ -54,6 +54,9 @@
     <Compile Include="Download.xaml.cs">
       <DependentUpon>Download.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Library\FLVFile.cs" />
+    <Compile Include="Library\General.cs" />
+    <Compile Include="Library\WAVFile.cs" />
     <Compile Include="UserControls\Browser.xaml.cs">
       <DependentUpon>Browser.xaml</DependentUpon>
     </Compile>
