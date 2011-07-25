@@ -16,6 +16,7 @@ using System.Web;
 using System.Net;
 using Microsoft.Win32;
 using System.IO;
+using JDP;
 
 namespace MyTube
 {
@@ -25,18 +26,19 @@ namespace MyTube
     public partial class Download : Window
     {
         Video video = new Video();
-        string scrapedata = string.Empty;
-        public string FilePath { get; set; }
+        string scrapedata = string.Empty, typeofdownload = string.Empty, flashfilepath = string.Empty, filepath = string.Empty;
         WebClient client = new WebClient();
         bool allowsaving = false;
+        Dictionary<string, string> downloadformat = new Dictionary<string, string> { {Constants.AUDIO, ".mp3"}, {Constants.VIDEO, ".avi"} };
 
-        public Download(Video video)
+        public Download(Video video, string typeofdownload)
         {
             InitializeComponent();
             try
             {
                 this.video = video;
-                TitleTextBlock.Text = video.Title + ".flv";
+                this.typeofdownload = typeofdownload;
+                TitleTextBlock.Text = video.Title + downloadformat[typeofdownload];
                 this.Background = new ImageBrush(new BitmapImage(new Uri(video.ThumbNailURL, UriKind.RelativeOrAbsolute)));
                 this.Closing += new System.ComponentModel.CancelEventHandler(Download_Closing);
                 scrapedata = Utility.ScrapeURL(Utility.FixURL(video.VideoURL));
@@ -44,10 +46,11 @@ namespace MyTube
                 {
                     return;
                 }
-                FilePath = ShowSaveFileDialog();
-                if (!string.IsNullOrEmpty(FilePath))
+                filepath = ShowSaveFileDialog();
+                if (!string.IsNullOrEmpty(filepath))
                 {
                     allowsaving = true;
+                    flashfilepath = filepath.Substring(0, filepath.LastIndexOf(".")) + ".flv";
                 }
             }
             catch (Exception ex)
@@ -67,8 +70,8 @@ namespace MyTube
             {
                 SaveFileDialog savefiledialog = new SaveFileDialog();
                 savefiledialog.FileName = video.Title;
-                savefiledialog.DefaultExt = ".flv";
-                savefiledialog.Filter = "Flash files (.flv) | *.flv";
+                savefiledialog.DefaultExt = downloadformat[typeofdownload];
+                savefiledialog.Filter =  "(" + downloadformat[typeofdownload] + ") | *" + downloadformat[typeofdownload];
                 if (savefiledialog.ShowDialog() == true)
                 {
                     filename = savefiledialog.FileName;
@@ -84,8 +87,12 @@ namespace MyTube
         void Download_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             client.CancelAsync();
+            client.Dispose();
         }
 
+        /// <summary>
+        /// Use web client to start downloading the file
+        /// </summary>
         public void ProcessScrapeData()
         {
             try
@@ -93,6 +100,7 @@ namespace MyTube
                 if (!allowsaving)
                 {
                     this.Close();
+                    return;
                 }
                 string serverdata = Utility.GetServerURL(scrapedata);
                 int separator = serverdata.IndexOf("?");
@@ -101,11 +109,12 @@ namespace MyTube
                 client.QueryString = collection;
                 client.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(client_DownloadFileCompleted);
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                client.DownloadFileAsync(new Uri(serverurl), FilePath);
+                client.DownloadFileAsync(new Uri(serverurl), flashfilepath);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Download/ProcessScrapeData\n" + ex.Message);
+                client.Dispose();
                 this.Close();
             }
         }
@@ -115,9 +124,49 @@ namespace MyTube
             DownloadProgressBar.Value = e.ProgressPercentage;
         }
 
+        /// <summary>
+        /// If the flv was downloaded successfully, extract the audio / video from it. Otherwise delete the partially downloaded flv file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            DownloadTextBlock.Text = Constants.DOWNLOAD_COMPLETE;
+            client.Dispose();
+            if (!e.Cancelled)
+            {
+                ExtractAudioVideo();
+            }
+            else
+            {
+                File.Delete(flashfilepath);
+            }
+        }
+
+        /// <summary>
+        /// Extract avi or mp3 from flv
+        /// </summary>
+        private void ExtractAudioVideo()
+        {
+            try
+            {
+                using (FLVFile flvfile = new FLVFile(flashfilepath))
+                {
+                    if (typeofdownload.Equals(Constants.AUDIO))
+                    {
+                        flvfile.ExtractStreams(true, false, false, null);
+                    }
+                    else if (typeofdownload.Equals(Constants.VIDEO))
+                    {
+                        flvfile.ExtractStreams(false, true, false, null);
+                    }
+                }
+                File.Delete(flashfilepath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Download/ExtractAudioVideo\n" + ex.Message);
+            }
+            DownloadTextBlock.Text = Constants.EXTRACTION_COMPLETE;
         }
     }
 }

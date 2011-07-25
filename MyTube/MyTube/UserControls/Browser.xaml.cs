@@ -67,7 +67,7 @@ namespace MyTube.UserControls
         {
             try
             {
-                Download download = new Download(video);
+                Download download = new Download(video, ((Button)sender).Tag.ToString());
                 download.Show();
                 download.ProcessScrapeData();
             }
