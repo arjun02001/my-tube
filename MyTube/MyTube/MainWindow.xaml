@@ -18,7 +18,7 @@
                         <Button Name="PreviousButton" Margin="10" Width="90" Content="Previous 10 &lt;&lt;" Click="NavigationButton_Click" Background="Black" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Center" Tag="previous" ToolTip="Show the previous 10 videos."></Button>
                         <Button Name="NextButton" Margin="10" Width="90" Content="&gt;&gt;Next 10" Click="NavigationButton_Click" Background="Black" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Center" Tag="next" ToolTip="Show the next 10 videos."></Button>
                     </StackPanel>
-                    <TextBlock Grid.Column="1" Text="About" Margin="10" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Developed by - Arjun Mukherji"></TextBlock>
+                    <TextBlock Grid.Column="1" Text="About" Margin="10" Foreground="WhiteSmoke" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Developed by - Arjun Mukherji. Send feedbacks at arjun02001@gmail.com."></TextBlock>
                 </Grid>
                 <my:DragCanvas x:Name="ContentDragCanvas" AllowDragging="True" AllowDragOutOfView="False" ></my:DragCanvas>
             </DockPanel>
