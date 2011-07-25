@@ -10,9 +10,6 @@ using MyTube.UserControls;
 
 namespace MyTube
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         List<Video> videos = new List<Video>();
@@ -41,7 +38,9 @@ namespace MyTube
         }
 
         /// <summary>
-        /// Gets videos using the search string given by the user
+        /// Gets videos using the search string given by the user.
+        /// This method gets triggered by "enter" press and "previous" or "next" press.
+        /// We need to modify the starting index of the search accordingly.
         /// </summary>
         private void SearchVideos()
         {
@@ -96,7 +95,7 @@ namespace MyTube
         }
 
         /// <summary>
-        /// Before populating the canvas, stop any playing video
+        /// Before populating the canvas, stop any playing videos.
         /// </summary>
         private void StopPlayingVideos()
         {
@@ -199,7 +198,8 @@ namespace MyTube
         }
 
         /// <summary>
-        /// Show the previous / next set of results
+        /// Show the previous / next set of results.
+        /// Modify the start index of search results accordingly.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

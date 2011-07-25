@@ -14,9 +14,6 @@ using JDP;
 
 namespace MyTube
 {
-    /// <summary>
-    /// Interaction logic for Download.xaml
-    /// </summary>
     public partial class Download : Window
     {
         Video video = new Video();
@@ -25,6 +22,11 @@ namespace MyTube
         bool allowsaving = false;
         Dictionary<string, string> downloadformat = new Dictionary<string, string> { {Constants.AUDIO, ".mp3"}, {Constants.VIDEO, ".avi"} };
 
+        /// <summary>
+        /// Initialize download
+        /// </summary>
+        /// <param name="video"></param>
+        /// <param name="typeofdownload">can be "audio" or "video"</param>
         public Download(Video video, string typeofdownload)
         {
             InitializeComponent();
