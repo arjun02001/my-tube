@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+﻿//Arjun Mukherji - Rights to distribute and modify granted.
 using System.Windows;
 
 namespace MyTube

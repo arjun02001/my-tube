@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿//Arjun Mukherji - Rights to distribute and modify granted.
 namespace MyTube.Classes
 {
     public class Video
