@@ -230,5 +230,10 @@ namespace MyTube
                 MessageBox.Show("MainWindow/NavigationButton\n" + ex.Message);
             }
         }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Developed by - Arjun Mukherji. Send feedbacks to arjun02001@gmail.com.");
+        }
     }
 }
