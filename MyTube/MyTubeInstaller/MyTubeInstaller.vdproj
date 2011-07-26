@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_DEC31265CCAF45B09D83D29089099F25"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_7B8BC8F82331494AB9DD05DD187D841F"
         "MsmSig" = "8:_UNDEFINED"
@@ -88,6 +94,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DEC31265CCAF45B09D83D29089099F25"
+            {
+            "SourcePath" = "8:..\\MyTube\\Images\\Movies.ico"
+            "TargetName" = "8:Movies.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_C49A7243688B4EB895C008BFFF3738C1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -145,7 +171,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MyTube"
         "ProductCode" = "8:{80A98313-4B1A-4C45-BA0B-E23E189F837D}"
-        "PackageCode" = "8:{94A7678E-BE09-4378-908A-D354F57A77CF}"
+        "PackageCode" = "8:{7D242C34-CC1A-43BC-B90E-F533EC91F680}"
         "UpgradeCode" = "8:{C18E68E4-76E6-42C5-BCD4-6B6761D9C742}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -276,7 +302,7 @@
             "Target" = "8:_7B8BC8F82331494AB9DD05DD187D841F"
             "Folder" = "8:_24417DAEFF7E468EA2F7B834F581EFC6"
             "WorkingFolder" = "8:_C49A7243688B4EB895C008BFFF3738C1"
-            "Icon" = "8:"
+            "Icon" = "8:_DEC31265CCAF45B09D83D29089099F25"
             "Feature" = "8:"
             }
         }
@@ -680,7 +706,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7B8BC8F82331494AB9DD05DD187D841F"
             {
-            "SourcePath" = "8:..\\MyTube\\obj\\x86\\Debug\\MyTube.exe"
+            "SourcePath" = "8:..\\MyTube\\obj\\x86\\Release\\MyTube.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_C49A7243688B4EB895C008BFFF3738C1"
