@@ -145,7 +145,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MyTube"
         "ProductCode" = "8:{80A98313-4B1A-4C45-BA0B-E23E189F837D}"
-        "PackageCode" = "8:{CF9FC93C-D88B-4BFA-8054-AD7EBBC73CD0}"
+        "PackageCode" = "8:{94A7678E-BE09-4378-908A-D354F57A77CF}"
         "UpgradeCode" = "8:{C18E68E4-76E6-42C5-BCD4-6B6761D9C742}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -265,6 +265,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B1885FCAFD5F43BF8D5483727081C1D6"
+            {
+            "Name" = "8:Shortcut to MyTube"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_7B8BC8F82331494AB9DD05DD187D841F"
+            "Folder" = "8:_24417DAEFF7E468EA2F7B834F581EFC6"
+            "WorkingFolder" = "8:_C49A7243688B4EB895C008BFFF3738C1"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
