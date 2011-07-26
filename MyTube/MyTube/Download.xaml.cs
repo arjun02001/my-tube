@@ -46,7 +46,7 @@ namespace MyTube
                 if (!string.IsNullOrEmpty(filepath))
                 {
                     allowsaving = true;
-                    flashfilepath = filepath.Substring(0, filepath.LastIndexOf(".")) + ".flv";
+                    flashfilepath = filepath.Substring(0, filepath.LastIndexOf(".")) + ((int)Utility.GetRandomDist(Constants.MAX_RESULTS)).ToString() + ".flv";
                 }
             }
             catch (Exception ex)
