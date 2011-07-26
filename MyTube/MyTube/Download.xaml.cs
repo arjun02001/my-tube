@@ -46,6 +46,7 @@ namespace MyTube
                 if (!string.IsNullOrEmpty(filepath))
                 {
                     allowsaving = true;
+                    //using random generator to support both audio and video download at the same time
                     flashfilepath = filepath.Substring(0, filepath.LastIndexOf(".")) + ((int)Utility.GetRandomDist(Constants.MAX_RESULTS)).ToString() + ".flv";
                 }
             }
