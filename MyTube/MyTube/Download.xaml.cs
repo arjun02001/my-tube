@@ -20,7 +20,7 @@ namespace MyTube
         string scrapedata = string.Empty, typeofdownload = string.Empty, flashfilepath = string.Empty, filepath = string.Empty;
         WebClient client = new WebClient();
         bool allowsaving = false;
-        Dictionary<string, string> downloadformat = new Dictionary<string, string> { {Constants.AUDIO, ".mp3"}, {Constants.VIDEO, ".avi"} };
+        Dictionary<string, string> downloadformat = new Dictionary<string, string> { {Constants.AUDIO, ".mp3"}, {Constants.VIDEO, ".flv"} };
 
         /// <summary>
         /// Initialize download
@@ -130,7 +130,14 @@ namespace MyTube
             client.Dispose();
             if (!e.Cancelled)
             {
-                ExtractAudioVideo();
+                if (typeofdownload.Equals(Constants.AUDIO))
+                {
+                    ExtractAudioVideo();
+                }
+                else
+                {
+                    DownloadTextBlock.Text = Constants.EXTRACTION_COMPLETE;
+                }
             }
             else
             {
@@ -147,14 +154,7 @@ namespace MyTube
             {
                 using (FLVFile flvfile = new FLVFile(flashfilepath))
                 {
-                    if (typeofdownload.Equals(Constants.AUDIO))
-                    {
-                        flvfile.ExtractStreams(true, false, false, null);
-                    }
-                    else if (typeofdownload.Equals(Constants.VIDEO))
-                    {
-                        flvfile.ExtractStreams(false, true, false, null);
-                    }
+                    flvfile.ExtractStreams(true, false, false, null);
                 }
                 File.Delete(flashfilepath);
             }
