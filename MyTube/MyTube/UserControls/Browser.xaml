@@ -8,7 +8,7 @@
              Height="250" Width="300">
     <Grid Background="Black">
         <DockPanel LastChildFill="True">
-            <Grid DockPanel.Dock="Top">
+            <Grid x:Name="TopGrid" DockPanel.Dock="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -16,10 +16,10 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Name="RankTextBlock" Foreground="WhiteSmoke" Margin="2" Grid.Column="0"></TextBlock>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
-                    <Button Name="AudioButton" Content="Audio" Margin="2" Background="Black" Click="DownloadButton_Click" Foreground="WhiteSmoke" ToolTip="Download Audio" Tag="audio"></Button>
-                    <Button Name="VideoButton" Content="Video" Margin="2" Background="Black" Click="DownloadButton_Click" Foreground="WhiteSmoke" ToolTip="Download Video" Tag="video"></Button>
+                    <Button Name="AudioButton" Content="Audio" Margin="2" Background="Black" Click="DownloadButton_Click" Foreground="WhiteSmoke" ToolTip="Download Audio" Tag="audio" MouseEnter="TopGrid_MouseEnter" MouseLeave="TopGrid_MouseLeave"></Button>
+                    <Button Name="VideoButton" Content="Video" Margin="2" Background="Black" Click="DownloadButton_Click" Foreground="WhiteSmoke" ToolTip="Download Video" Tag="video" MouseEnter="TopGrid_MouseEnter" MouseLeave="TopGrid_MouseLeave"></Button>
                 </StackPanel>
-                <Button Name="CloseButton" Content="X" Grid.Column="2" Width="20" Background="Black" Click="CloseButton_Click" Foreground="WhiteSmoke" HorizontalAlignment="Right" Margin="2"></Button>
+                <Button Name="CloseButton" Content="X" Grid.Column="2" Width="20" Background="Black" Click="CloseButton_Click" Foreground="WhiteSmoke" HorizontalAlignment="Right" Margin="2" MouseEnter="TopGrid_MouseEnter" MouseLeave="TopGrid_MouseLeave"></Button>
             </Grid>
             <WebBrowser Name="VideoBrowser"></WebBrowser>
         </DockPanel>
