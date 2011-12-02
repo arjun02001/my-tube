@@ -37,7 +37,7 @@
     </UserControl.Resources>
     <DockPanel LastChildFill="True" Background="Black">
         <Grid DockPanel.Dock="Top">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel x:Name="TopPanel" Orientation="Horizontal" MouseEnter="TopPanel_MouseEnter" MouseLeave="TopPanel_MouseLeave">
                 <TextBlock Name="RankTextBlock" Foreground="WhiteSmoke" Margin="2"></TextBlock>
                 <TextBlock Name="TitleTextBlock" Foreground="WhiteSmoke" Margin="2" TextWrapping="WrapWithOverflow" Width="180"></TextBlock>
             </StackPanel>
