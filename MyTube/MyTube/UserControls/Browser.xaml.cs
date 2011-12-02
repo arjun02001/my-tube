@@ -13,6 +13,8 @@ namespace MyTube.UserControls
 
         public delegate void BrowserClosedHandler(Browser browser);
         public event BrowserClosedHandler BrowserClosed;
+        public delegate void CanBeDraggedHandler(Browser browser, bool mode);
+        public event CanBeDraggedHandler CanBeDragged;
 
         /// <summary>
         /// Assign the url as source to the web-browser
@@ -70,6 +72,22 @@ namespace MyTube.UserControls
             catch (Exception ex)
             {
                 MessageBox.Show("Browser/DownloadButton\n" + ex.Message);
+            }
+        }
+
+        private void TopGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (CanBeDragged != null)
+            {
+                CanBeDragged(this, false);
+            }
+        }
+
+        private void TopGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (CanBeDragged != null)
+            {
+                CanBeDragged(this, true);
             }
         }
     }

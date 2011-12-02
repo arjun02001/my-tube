@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="150"
-             Width="200" Height="200" ToolTip="Check 'Play Mode' to play this video. Uncheck 'Play Mode' to be able to drag.">
+             Width="200" Height="200">
     <UserControl.Resources>
         <ControlTemplate x:Key="PlayButtonTemplate">
             <Grid>
@@ -42,7 +42,7 @@
                 <TextBlock Name="TitleTextBlock" Foreground="WhiteSmoke" Margin="2" TextWrapping="WrapWithOverflow" Width="180"></TextBlock>
             </StackPanel>
         </Grid>
-        <Grid Background="Black">
+        <Grid x:Name="BottomGrid" Background="Black" MouseEnter="BottomGrid_MouseEnter" MouseLeave="BottomGrid_MouseLeave">
             <Image x:Name="ThumbNailImage" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Grid Name="MyGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.0">
                 <Button Name="PlayButton" Click="PlayButton_Click" Template="{StaticResource PlayButtonTemplate}"></Button>

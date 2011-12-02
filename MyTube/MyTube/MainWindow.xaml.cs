@@ -82,6 +82,7 @@ namespace MyTube
                 for (int i = 0; i < videos.Count; i++)
                 {
                     SearchResult searchresult = new SearchResult(videos[i]);
+                    searchresult.CanBeDragged += new SearchResult.CanBeDraggedHandler(searchresult_CanBeDragged);
                     searchresult.VideoSelected += new SearchResult.VideoSelectedHandler(searchresult_VideoSelected);
                     int angleMutiplier = i % 2 == 0 ? 1 : -1;
                     searchresult.RenderTransform = new RotateTransform { Angle = Utility.GetRandom(30, angleMutiplier) };
@@ -92,6 +93,11 @@ namespace MyTube
             {
                 MessageBox.Show("MainWindow/PopulateCanvas\n" + ex.Message);
             }
+        }
+
+        void searchresult_CanBeDragged(SearchResult searchresult, bool mode)
+        {
+            DragCanvas.SetCanBeDragged(searchresult, mode);
         }
 
         /// <summary>
@@ -126,7 +132,7 @@ namespace MyTube
                 control.SetValue(Canvas.LeftProperty, Utility.GetRandomDist(ContentDragCanvas.ActualWidth - 150.0));
                 control.SetValue(Canvas.TopProperty, Utility.GetRandomDist(ContentDragCanvas.ActualHeight - 150.0));
                 ContentDragCanvas.Children.Add(control);
-                DragCanvas.SetCanBeDragged(control, !(bool)PlayModeCheckBox.IsChecked);
+                //DragCanvas.SetCanBeDragged(control, !(bool)PlayModeCheckBox.IsChecked);
             }
             catch (Exception ex)
             {
@@ -155,6 +161,7 @@ namespace MyTube
             try
             {
                 Browser browser = new Browser(video);
+                browser.CanBeDragged += new Browser.CanBeDraggedHandler(browser_CanBeDragged);
                 browser.BrowserClosed += new Browser.BrowserClosedHandler(browser_BrowserClosed);
                 AddUIElementToCanvas(browser);
             }
@@ -162,6 +169,11 @@ namespace MyTube
             {
                 MessageBox.Show("MainWindow/VideoSelected\n" + ex.Message);
             }
+        }
+
+        void browser_CanBeDragged(Browser browser, bool mode)
+        {
+            DragCanvas.SetCanBeDragged(browser, mode);
         }
 
         /// <summary>
@@ -185,7 +197,7 @@ namespace MyTube
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PlayModeCheckBox_Click(object sender, RoutedEventArgs e)
+        /*private void PlayModeCheckBox_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -195,7 +207,7 @@ namespace MyTube
             {
                 MessageBox.Show("MainWindow/CheckBoxClick\n" + ex.Message);
             }
-        }
+        }*/
 
         /// <summary>
         /// Show the previous / next set of results.

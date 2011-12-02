@@ -20,6 +20,8 @@ namespace MyTube.UserControls
 
         public delegate void VideoSelectedHandler(Video video);
         public event VideoSelectedHandler VideoSelected;
+        public delegate void CanBeDraggedHandler(SearchResult searchresult, bool mode);
+        public event CanBeDraggedHandler CanBeDragged;
 
         /// <summary>
         /// Assign the meta data to this control
@@ -119,12 +121,36 @@ namespace MyTube.UserControls
 
         private void TopPanel_MouseEnter(object sender, MouseEventArgs e)
         {
-
+            if (CanBeDragged != null)
+            {
+                CanBeDragged(this, true);
+            }
         }
 
         private void TopPanel_MouseLeave(object sender, MouseEventArgs e)
         {
+            if (CanBeDragged != null)
+            {
+                CanBeDragged(this, false);
+            }
+        }
 
+        private void BottomGrid_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Cursor = Cursors.Hand;
+            if (CanBeDragged != null)
+            {
+                CanBeDragged(this, false);
+            }
+        }
+
+        private void BottomGrid_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Cursor = Cursors.Arrow;
+            if (CanBeDragged != null)
+            {
+                CanBeDragged(this, false);
+            }
         }
     }
 }

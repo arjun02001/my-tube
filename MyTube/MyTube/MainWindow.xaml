@@ -14,7 +14,7 @@
                     <StackPanel Orientation="Horizontal" Grid.Column="0">
                         <TextBlock Text="MyTube" Margin="10" FontSize="20" Foreground="WhiteSmoke"></TextBlock>
                         <TextBox Name="SearchTextBox" Margin="10" Width="500" Background="WhiteSmoke" KeyDown="SearchTextBox_KeyDown" ToolTip="Enter the video you want to search and press enter."></TextBox>
-                        <CheckBox Name="PlayModeCheckBox" Margin="10" Content="Play Mode" Click="PlayModeCheckBox_Click" Foreground="WhiteSmoke" FontSize="15" VerticalAlignment="Center" ToolTip="If unchecked, items can ONLY be dragged. To activate the items for playing or downloading, check this."></CheckBox>
+                        <!--<CheckBox Name="PlayModeCheckBox" Margin="10" Content="Play Mode" Click="PlayModeCheckBox_Click" Foreground="WhiteSmoke" FontSize="15" VerticalAlignment="Center" ToolTip="If unchecked, items can ONLY be dragged. To activate the items for playing or downloading, check this."></CheckBox>-->
                         <Button Name="PreviousButton" Margin="10" Width="90" Content="Previous 10 &lt;&lt;" Click="NavigationButton_Click" Background="Black" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Center" Tag="previous" ToolTip="Show the previous 10 videos."></Button>
                         <Button Name="NextButton" Margin="10" Width="90" Content="&gt;&gt;Next 10" Click="NavigationButton_Click" Background="Black" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Center" Tag="next" ToolTip="Show the next 10 videos."></Button>
                     </StackPanel>
