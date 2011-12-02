@@ -111,15 +111,13 @@ namespace MyTube.Classes
         {
             try
             {
-                int startindex = 0, endindex = 0;
-                string starttag = "\"fmt_url_map\": ";
-                string endtag = "\",";
-                startindex = scrapedata.IndexOf(starttag, StringComparison.CurrentCultureIgnoreCase);
-                endindex = scrapedata.IndexOf(endtag, startindex, StringComparison.CurrentCultureIgnoreCase);
-                string serverurl = scrapedata.Substring(startindex + starttag.Length, endindex - (startindex + starttag.Length));
-                serverurl = serverurl.Substring(serverurl.LastIndexOf("http"));
-                serverurl = HttpUtility.UrlDecode(serverurl).Replace("%252", "%2").Replace("\\u0026", "&").Replace(@"\", "");
-                return serverurl;
+                int start = scrapedata.IndexOf("vorbi");
+                int end = scrapedata.IndexOf("flv", start) + 3;
+                scrapedata = scrapedata.Substring(start, end - start);
+                start = scrapedata.LastIndexOf("http");
+                end = scrapedata.LastIndexOf("flv") + 3;
+                scrapedata = scrapedata.Substring(start, end - start);
+                return HttpUtility.UrlDecode(Uri.UnescapeDataString(scrapedata));
             }
             catch (Exception ex)
             {
