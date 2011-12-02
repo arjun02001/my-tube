@@ -38,7 +38,16 @@ namespace MyTube.Classes
                               ThumbNailURL = item.Element(media + "group").Element(media + "thumbnail").Attribute("url").Value,
                               Rank = rank++,
                               Title = item.Element("title").Value,
-                              Duration = item.Element(media + "group").Element(yt + "duration").Attribute("seconds").Value
+                              Duration = item.Element(media + "group").Element(yt + "duration").Attribute("seconds").Value,
+                              StartImageURL = (from e in item.Element(media + "group").Elements(media + "thumbnail")
+                                              where e.Attribute(yt + "name").Value.Equals("start")
+                                              select e.Attribute("url").Value).Single(),
+                              MiddleImageURL = (from e in item.Element(media + "group").Elements(media + "thumbnail")
+                                               where e.Attribute(yt + "name").Value.Equals("middle")
+                                               select e.Attribute("url").Value).Single(),
+                              EndImageURL = (from e in item.Element(media + "group").Elements(media + "thumbnail")
+                                               where e.Attribute(yt + "name").Value.Equals("end")
+                                               select e.Attribute("url").Value).Single()
                           }).ToList<Video>();
             }
             catch (Exception ex)
