@@ -11,6 +11,7 @@ using System.Net;
 using Microsoft.Win32;
 using System.IO;
 using JDP;
+using System.Text.RegularExpressions;
 
 namespace MyTube
 {
@@ -66,7 +67,9 @@ namespace MyTube
             try
             {
                 SaveFileDialog savefiledialog = new SaveFileDialog();
-                savefiledialog.FileName = video.Title;
+                //remove invalid chars in filename
+                Regex regex = new Regex(@"[\/?:*""><|]+");
+                savefiledialog.FileName = regex.Replace(video.Title, "");
                 savefiledialog.DefaultExt = downloadformat[typeofdownload];
                 savefiledialog.Filter =  "(" + downloadformat[typeofdownload] + ") | *" + downloadformat[typeofdownload];
                 if (savefiledialog.ShowDialog() == true)
